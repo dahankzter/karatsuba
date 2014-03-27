@@ -11,18 +11,22 @@ const (
 
 func Multiply(x, y *big.Int) *big.Int {
 
-	m := min(x.BitLen(), y.BitLen()) / 2
+	x1 := big.NewInt(x.Int64())
+	y1 := big.NewInt(x.Int64())
+
+	m := min(x1.BitLen(), y1.BitLen()) / 2
 
 	if m < THRESHOLD {
 		z := big.NewInt(0)
-		return z.Mul(x, y)
+		return z.Mul(x1, y1)
 	}
 
 	return big.NewInt(0)
 }
 
 func split(x *big.Int, m uint) []*big.Int {
-	left := bigint(int64(x.Uint64())).Rsh(x, m)
+	x1 := big.NewInt(x.Int64())
+	left := bigint(int64(x.Uint64())).Rsh(x1, m)
 
 	t1 := bigint(left.Int64())
 	t1 = t1.Lsh(t1, m)
@@ -34,7 +38,7 @@ func split(x *big.Int, m uint) []*big.Int {
 }
 
 func bigint(n int64) *big.Int {
-	return big.NewInt(int64(n))
+	return big.NewInt(n)
 }
 
 func min(a, b int) int {
