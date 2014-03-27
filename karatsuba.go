@@ -1,6 +1,7 @@
 package karatsuba
 
 import (
+	//"fmt"
 	"math/big"
 )
 
@@ -22,7 +23,13 @@ func Multiply(x, y *big.Int) *big.Int {
 
 func split(x *big.Int, m uint) []*big.Int {
 	left := bigint(int64(x.Uint64())).Rsh(x, m)
-	right := bigint(int64(x.Uint64())).Sub(x, bigint(int64(left.Uint64())))
+
+	t1 := bigint(left.Int64())
+	t1 = t1.Lsh(t1, m)
+
+	t3 := bigint(x.Int64())
+	right := t3.Sub(t3, t1)
+
 	return []*big.Int{left, right}
 }
 
