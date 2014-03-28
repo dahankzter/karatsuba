@@ -14,7 +14,7 @@ func Multiply(x, y *big.Int) *big.Int {
 	x1 := big.NewInt(x.Int64())
 	y1 := big.NewInt(x.Int64())
 
-	m := min(x1.BitLen(), y1.BitLen()) / 2
+	m := pivot(x1, y1)
 
 	if m < THRESHOLD {
 		z := big.NewInt(0)
@@ -39,6 +39,10 @@ func split(x *big.Int, m uint) []*big.Int {
 
 func bigint(n int64) *big.Int {
 	return big.NewInt(n)
+}
+
+func pivot(a, b *big.Int) int {
+	return min(a.BitLen(), b.BitLen()) / 2
 }
 
 func min(a, b int) int {

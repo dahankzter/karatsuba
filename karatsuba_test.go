@@ -5,6 +5,39 @@ import (
 	"testing"
 )
 
+var w big.Word
+
+var expBitLenTests = []struct {
+	a   *big.Int
+	b   *big.Int
+	exp int
+}{
+	{
+		bigint(2),
+		bigint(4),
+		bigint(2).BitLen() / 2,
+	},
+	{
+		bigint(1),
+		bigint(4),
+		bigint(1).BitLen() / 2,
+	},
+	{
+		bigint(5),
+		bigint(10),
+		bigint(5).BitLen() / 2,
+	},
+}
+
+func TestPivot(t *testing.T) {
+	for _, testData := range expBitLenTests {
+		m := pivot(testData.a, testData.b)
+		if m != testData.exp {
+			t.Fatalf("Expected pivot point %v but got %v", testData.exp, m)
+		}
+	}
+}
+
 func TestSplit(t *testing.T) {
 	for _, testData := range listTests {
 		res := split(testData.input, 2)
